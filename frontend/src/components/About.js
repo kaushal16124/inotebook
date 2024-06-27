@@ -49,7 +49,7 @@ const About = () => {
       <hr />
 
       <div className="choose-us">
-        <h2>Why Choose myNotebook?</h2>
+        <h2>Why myNotebook?</h2>
         <p>
           <strong>User-Friendly Interface:</strong> Our platform is designed with simplicity in mind, making it easy for you to get started and stay organized.
         </p>
