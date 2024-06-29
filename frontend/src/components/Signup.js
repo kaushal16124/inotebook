@@ -6,6 +6,7 @@ const Signup = (props) => {
   let navigate = useNavigate();
 
   const handleSubmit = async (e) => {
+    console.log("Signup triggered")
     e.preventDefault();
     const { name, email, password } = credentials;
     const response = await fetch("https://inotebook-7q5s.onrender.com/api/auth/createuser", {
@@ -25,7 +26,11 @@ const Signup = (props) => {
       navigate("/")
       props.showAlert("Account created successfully", "success")
     } else {
-      props.showAlert("Invalid credentials", "danger")
+      if (json.error === 'Duplicate user') {
+        props.showAlert("User already exists", "danger");
+      } else {
+        props.showAlert("Invalid credentials", "danger");
+      }
     }
 
   }
