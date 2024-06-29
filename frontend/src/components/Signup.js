@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+//https://inotebook-7q5s.onrender.com
 const Signup = (props) => {
   const [credentials, setCredentials] = useState({ name: "", email: "", password: "", cpassword: "" });
   let navigate = useNavigate();
@@ -23,6 +24,7 @@ const Signup = (props) => {
     if (json.success) {
       //redirect
       localStorage.setItem('token', json.authtoken);
+      localStorage.setItem('user', JSON.stringify(json.user));
       navigate("/")
       props.showAlert("Account created successfully", "success")
     } else {
