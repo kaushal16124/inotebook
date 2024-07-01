@@ -24,6 +24,7 @@ const Signup = (props) => {
   useEffect(
     () => {
       if (user) {
+        props.setProgress(10);
         axios
           .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
             headers: {
@@ -33,11 +34,11 @@ const Signup = (props) => {
           })
           .then((res) => {
             setProfile(res.data);
-
+            props.setProgress(30);
           })
           .catch((err) => console.log(err))
 
-       
+
       }
     },
     [user]
@@ -46,11 +47,13 @@ const Signup = (props) => {
   useEffect(() => {
     if (profile) {
       handleGoogleSubmit();
+      props.setProgress(100);
     }
   }, [profile]);
 
   const handleGoogleSubmit = async (e) => {
     console.log("Signup using Google triggered")
+    props.setProgress(40);
     // e.preventDefault();
     const response = await fetch("https://inotebook-7q5s.onrender.com/api/auth/createuser", {
 
@@ -60,6 +63,7 @@ const Signup = (props) => {
       },
       body: JSON.stringify({ name: profile.name, email: profile.email, password: "123456789" })
     });
+    props.setProgress(50);
     const json = await response.json();
     console.log(json);
     //redirect
@@ -76,11 +80,13 @@ const Signup = (props) => {
         props.showAlert("Invalid credentials", "danger");
       }
     }
+    props.setProgress(100);
 
   }
 
 
   const handleSubmit = async (e) => {
+    props.setProgress(10);
     console.log("Signup triggered")
     e.preventDefault();
     const { name, email, password } = credentials;
@@ -92,7 +98,10 @@ const Signup = (props) => {
       },
       body: JSON.stringify({ name: credentials.name, email: credentials.email, password: credentials.password })
     });
+
+    props.setProgress(30);
     const json = await response.json();
+    props.setProgress(50);
     console.log(json);
     //redirect
     if (json.success) {
@@ -108,6 +117,8 @@ const Signup = (props) => {
         props.showAlert("Invalid credentials", "danger");
       }
     }
+    props.setProgress(90);
+    props.setProgress(100);
 
   }
 
@@ -122,11 +133,11 @@ const Signup = (props) => {
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
               <label htmlFor="name" className="form-label">Name</label>
-              <input type="text" className="form-control" id="name" name="name" onChange={onChange} aria-describedby="emailHelp" />
+              <input type="text" className="form-control" id="name" name="name" onChange={onChange} required aria-describedby="emailHelp" />
             </div>
             <div className="mb-3">
               <label htmlFor="email" className="form-label">Email address</label>
-              <input type="email" className="form-control" id="email" name="email" onChange={onChange} aria-describedby="emailHelp" />
+              <input type="email" className="form-control" id="email" name="email" onChange={onChange} required aria-describedby="emailHelp" />
             </div>
             <div className="mb-3">
               <label htmlFor="exampleInputPassword1" className="form-label">Password</label>

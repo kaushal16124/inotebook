@@ -21,6 +21,7 @@ const Login = (props) => {
     useEffect(
       () => {
         if (user) {
+            props.setProgress(10);
           axios
             .get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
               headers: {
@@ -30,7 +31,7 @@ const Login = (props) => {
             })
             .then((res) => {
               setProfile(res.data);
-              
+              props.setProgress(30);
   
             })
             .catch((err) => console.log(err))
@@ -44,6 +45,7 @@ const Login = (props) => {
     useEffect(() => {
         if (profile) {
             handleGoogleLoginSubmit();
+            props.setProgress(100);
         }
       }, [profile]);
 
@@ -61,21 +63,27 @@ const Login = (props) => {
             },
             body: JSON.stringify({ email: profile.email, password: "123456789" })
         });
+        props.setProgress(40);
         const json = await response.json();
+        props.setProgress(50);
         console.log(json);
         if (json.success) {
             //redirect
             localStorage.setItem('token', json.authtoken);
             localStorage.setItem('user', JSON.stringify(json.user));
+            props.setProgress(70);
             navigate("/");
+            props.setProgress(100);
             props.showAlert("Login Successful", "success");
         } else {
             props.showAlert("Invalid credentials", "danger");
         }
+        props.setProgress(100);
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        props.setProgress(10);
         const response = await fetch("https://inotebook-7q5s.onrender.com/api/auth/login", {
             method: "POST",
             headers: {
@@ -83,7 +91,9 @@ const Login = (props) => {
             },
             body: JSON.stringify({ email: credentials.email, password: credentials.password })
         });
+        props.setProgress(30);
         const json = await response.json();
+        props.setProgress(50);
         console.log(json);
         if (json.success) {
             //redirect
@@ -94,6 +104,7 @@ const Login = (props) => {
         } else {
             props.showAlert("Invalid credentials", "danger");
         }
+        props.setProgress(100);
     }
 
     const onChange = (e) => {

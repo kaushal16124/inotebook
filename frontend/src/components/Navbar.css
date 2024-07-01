@@ -1,0 +1,46 @@
+.navbar {
+  background-color: #1b3a69 !important; /* Darker primary color */
+}
+
+.navbar-brand {
+  font-weight: bold;
+  color: #fff !important;
+}
+
+.nav-link {
+  color: #e6e6e6 !important;
+  transition: color 0.3s ease;
+}
+
+.nav-link.active {
+  color: #fff !important;
+}
+
+.nav-link:hover {
+  color: #b3d4fc !important; /* Lighter blue on hover */
+}
+
+.btn-outline-light {
+  border-color: #0c0505;
+  color: #f43535;
+}
+
+.btn-outline-light:hover {
+  background-color: #fff;
+  color: #007bff;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.shadow-sm {
+  box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
+}
+
+.text-light {
+  color: #fff !important;
+}

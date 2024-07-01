@@ -1,18 +1,22 @@
 import { useLocation, useNavigate } from "react-router-dom"
 import React, { useEffect, useState } from 'react'
+import './Navbar.css';
 
-
-const Navbar = () => {
+const Navbar = (props) => {
   let navigate = useNavigate();
   let location = useLocation();
   const [user, setUser] = useState(null);
 
   const handleLogout = () => {
+    props.setProgress(10);
     localStorage.removeItem('token');
+    props.setProgress(30);
     localStorage.removeItem('user');
+    props.setProgress(70);
     localStorage.clear()
     setUser(null);
     navigate("/login");
+    props.setProgress(100);
   }
 
   useEffect(() => {
@@ -21,11 +25,11 @@ const Navbar = () => {
       setUser({name:userData.name, email:userData.email, imageUrl:"https://img.freepik.com/premium-vector/man-avatar-profile-picture-vector-illustration_268834-538.jpg"});
     }
     // Google Analytics
-    console.log(location);
+    // console.log(location);
   }, [location]);
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
       <div className="container-fluid">
         <a className="navbar-brand" href="/">myNotebook</a>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,8 +45,8 @@ const Navbar = () => {
             </li>
           </ul>
           {!localStorage.getItem('token') ? <form className="d-flex" role="search">
-            <a className="btn btn-primary mx-2" href="/signup" role="button">SignUp</a>
-            <a className="btn btn-primary mx-2" href="/login" role="button">Login</a>
+            <a className="btn btn-warning mx-2" href="/signup" role="button">SignUp</a>
+            <a className="btn btn-warning mx-2" href="/login" role="button">Login</a>
 
 
           </form> : <>
@@ -52,7 +56,7 @@ const Navbar = () => {
                   <span className="text-light">{user.name}</span>
                 </div>
               )}
-          <button className="btn btn-primary mx-2" onClick={handleLogout}>Logout</button>
+          <button className="btn btn-danger mx-2" onClick={handleLogout}>Logout</button>
           </>
           }
         </div>
